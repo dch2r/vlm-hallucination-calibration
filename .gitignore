@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+ENV/
+
+# Virtual envs
+*.egg-info/
+.eggs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Data (too large for git)
+data/coco/
+data/vqa/
+data/*.zip
+data/*.tar.gz
+*.jpg
+*.png
+!docs/*.png
+
+# Model weights (too large)
+*.bin
+*.safetensors
+*.pt
+*.pth
+weights/
+
+# Results / outputs
+results/*.json
+results/*.csv
+results/*.pkl
+results/runs/
+
+# HuggingFace cache
+.cache/
+~/.cache/huggingface/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
