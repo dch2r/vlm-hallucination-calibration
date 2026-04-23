@@ -28,22 +28,41 @@ cross-modal grounding verification and iterative re-prompting.
 
 ## Setup
 
-    python -m venv venv
+Requires Python >= 3.10.
+
+    git clone https://github.com/dch2r/vlm-hallucination-calibration.git
+    cd vlm-hallucination-calibration
+    bash scripts/setup.sh
     source venv/bin/activate
-    pip install -r requirements.txt
-    python -m spacy download en_core_web_sm
+
+## Running Tests
+
+Each module has a standalone smoke test you can run to verify the install:
+
+    python tests/test_clip_scorer.py
+    python tests/test_entity_extractor.py
+    python tests/test_hallucination_detector.py
+
+First run of CLIP test downloads ~600MB of model weights.
+
+## Running on Rice NOTS (GPU)
+
+On NOTS, request an interactive GPU session before running:
+
+    srun --partition=gpu --gres=gpu:1 --time=01:00:00 --mem=32G --pty bash
+    module load python/3.11
+    cd ~/vlm-hallucination-calibration
+    source venv/bin/activate
+    python tests/test_clip_scorer.py
 
 ## Repository Structure
 
     src/
-        modules/       Core building blocks (CLIP, entity extraction)
+        modules/       Core building blocks (CLIP, entity extraction, detector)
         pipeline/      End-to-end calibration pipeline
     experiments/       Evaluation scripts
-    scripts/           Utility and data-prep scripts
+    scripts/           Setup and utility scripts
     tests/             Unit tests for each module
     results/           Generated results (gitignored)
     notebooks/         Exploration notebooks
 
-## Status
-
-Actively under development. See experiments/ for current evaluation runs.
