@@ -1,110 +1,101 @@
 """
-CLIP-based cross-modal grounding scorer.
+CLIP-based grounding scorer.
 
-Computes the cosine similarity between a CLIP image embedding and a CLIP
-text embedding for each candidate entity phrase. Higher scores indicate
-that the entity is visually grounded in the image. We use these scores
-to flag hallucinated entities at a configurable threshold.
+For each (image, entity-phrase) pair, computes the cosine similarity
+between the CLIP image embedding and the CLIP text embedding of the
+phrase. Returns a list of (entity, score) pairs.
 
-This module is the first stage of our verification pipeline. It treats
-the VLM as a black box and operates entirely on the generated text.
+Compatible with both transformers <4.49 (returns tensors) and
+transformers >=4.49 (returns BaseModelOutputWithPooling wrappers).
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Iterable, List, Optional, Union
+from typing import List, Union
 
 import torch
 from PIL import Image
-from transformers import CLIPModel, CLIPProcessor
 
 
 @dataclass
 class EntityScore:
-    """Single entity with its CLIP grounding score."""
+    """One entity with its grounding score."""
     entity: str
     score: float
 
 
-class CLIPGroundingScorer:
+def _to_tensor(out) -> torch.Tensor:
     """
-    Wraps a HuggingFace CLIP model and exposes a simple
-    .score_entities(image, entities) interface.
+    Normalize the return value of CLIP's get_image_features /
+    get_text_features so we always work with a 2-D tensor.
 
-    Example:
-        scorer = CLIPGroundingScorer()
-        results = scorer.score_entities(
-            image=Image.open("photo.jpg").convert("RGB"),
-            entities=["a man", "a bicycle", "a red car"],
-        )
-        for r in results:
-            print(f"{r.entity:20s} -> {r.score:.4f}")
+    transformers <4.49: returns Tensor[B, D] directly.
+    transformers >=4.49: returns BaseModelOutputWithPooling with
+                         .pooler_output (preferred) or .last_hidden_state.
     """
+    if isinstance(out, torch.Tensor):
+        return out
+    if hasattr(out, "pooler_output") and out.pooler_output is not None:
+        return out.pooler_output
+    if hasattr(out, "last_hidden_state"):
+        # Mean-pool over sequence dimension as a fallback.
+        return out.last_hidden_state.mean(dim=1)
+    raise TypeError(f"Unrecognized CLIP output type: {type(out)}")
+
+
+class CLIPGroundingScorer:
+    """Score how well each entity phrase is grounded in an image."""
 
     def __init__(
         self,
-        model_name: str = "openai/clip-vit-base-patch32",
-        device: Optional[str] = None,
+        model_id: str = "openai/clip-vit-base-patch32",
+        device: str = None,
         prompt_template: str = "a photo of {entity}",
     ) -> None:
-        self.model_name = model_name
-        self.prompt_template = prompt_template
-        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        from transformers import CLIPModel, CLIPProcessor
 
-        self.model = CLIPModel.from_pretrained(model_name).to(self.device)
-        self.model.eval()
-        self.processor = CLIPProcessor.from_pretrained(model_name)
+        if device is None:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = device
+        self.prompt_template = prompt_template
+
+        print("Loading CLIP scorer (this downloads ~600MB on first run)...")
+        self.model = CLIPModel.from_pretrained(model_id).to(device).eval()
+        self.processor = CLIPProcessor.from_pretrained(model_id)
+        print(f"  device = {device}")
 
     @torch.no_grad()
     def score_entities(
         self,
         image: Union[Image.Image, str],
-        entities: Iterable[str],
+        entities: List[str],
     ) -> List[EntityScore]:
-        """
-        Compute a CLIP cosine-similarity grounding score for each entity.
-
-        Args:
-            image:    PIL Image (RGB) or path to an image file.
-            entities: Iterable of short noun phrases (e.g. "a red car").
-
-        Returns:
-            List of EntityScore in the same order as the input entities.
-        """
-        if isinstance(image, str):
-            image = Image.open(image).convert("RGB")
-
-        entity_list = list(entities)
-        if not entity_list:
+        if not entities:
             return []
 
-        prompts = [self.prompt_template.format(entity=e) for e in entity_list]
+        if isinstance(image, str):
+            image = Image.open(image).convert("RGB")
+        elif image.mode != "RGB":
+            image = image.convert("RGB")
 
-        inputs = self.processor(
-            text=prompts,
-            images=image,
-            return_tensors="pt",
-            padding=True,
-        ).to(self.device)
+        prompts = [self.prompt_template.format(entity=e) for e in entities]
 
-        # Get raw embeddings
-        image_features = self.model.get_image_features(
-            pixel_values=inputs["pixel_values"]
-        )
-        text_features = self.model.get_text_features(
-            input_ids=inputs["input_ids"],
-            attention_mask=inputs["attention_mask"],
-        )
-
-        # Normalize for cosine similarity
+        # Image features.
+        img_inputs = self.processor(images=image, return_tensors="pt").to(self.device)
+        image_features = _to_tensor(self.model.get_image_features(**img_inputs))
         image_features = image_features / image_features.norm(dim=-1, keepdim=True)
+
+        # Text features.
+        txt_inputs = self.processor(
+            text=prompts, return_tensors="pt", padding=True, truncation=True
+        ).to(self.device)
+        text_features = _to_tensor(self.model.get_text_features(**txt_inputs))
         text_features = text_features / text_features.norm(dim=-1, keepdim=True)
 
-        # image_features: [1, D]  text_features: [N, D]
-        sims = (text_features @ image_features.T).squeeze(-1)  # [N]
+        # Cosine similarity between the single image vec and each text vec.
+        sims = (image_features @ text_features.T).squeeze(0).cpu().tolist()
+        if isinstance(sims, float):
+            sims = [sims]
 
-        return [
-            EntityScore(entity=ent, score=float(sim))
-            for ent, sim in zip(entity_list, sims.tolist())
-        ]
+        return [EntityScore(entity=e, score=float(s)) for e, s in zip(entities, sims)]
