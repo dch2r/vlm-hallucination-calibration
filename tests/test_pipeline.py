@@ -49,7 +49,7 @@ def main() -> None:
         max_rounds=2,
         policy="percentile",
         percentile=30.0,
-        max_new_tokens=64,
+        max_new_tokens=128,
     )
     print(f"Pipeline ready in {time.time() - t0:.1f}s\n")
 

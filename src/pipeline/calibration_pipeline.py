@@ -1,34 +1,4 @@
-"""
-End-to-end calibration pipeline.
-
-Wraps a VLM backbone with the verification stack (entity extraction +
-CLIP scoring + hallucination detection) and a selective re-prompting
-loop. Records the full per-round trajectory so we can compute staged
-metrics (round 0 vs round 1 vs round 2) for the final report.
-
-Pipeline flow:
-
-    image, prompt
-        |
-        v
-    [round 0]  VLM.generate -> response_0
-                              -> detect hallucinations
-                              -> if none: STOP
-                              -> else: build re-prompt
-        |
-        v
-    [round 1]  VLM.generate(re-prompt) -> response_1
-                                       -> detect hallucinations
-                                       -> if none: STOP
-                                       -> else: build re-prompt
-        |
-        v
-    [round 2]  VLM.generate(re-prompt) -> response_2  (final)
-
-The pipeline always returns a complete trajectory, including all
-intermediate responses and per-round verdicts. This is what enables
-staged evaluation across rounds 0, 1, 2.
-"""
+"""End-to-end calibration pipeline."""
 
 from __future__ import annotations
 
@@ -48,22 +18,20 @@ from src.pipeline.selective_regenerator import SelectiveRegenerator
 
 @dataclass
 class RoundResult:
-    """One round in the calibration trajectory."""
-    round_index: int                       # 0 = initial, 1 = after first re-prompt, ...
-    prompt: str                            # Prompt sent to the VLM this round
-    response: str                          # VLM output this round
-    detection: DetectionResult             # Per-entity verdicts on the response
+    round_index: int
+    prompt: str
+    response: str
+    detection: DetectionResult
     num_hallucinated: int
     num_grounded: int
 
 
 @dataclass
 class CalibrationResult:
-    """Full trajectory for a single (image, prompt) calibration run."""
     image_id: Optional[str]
     initial_prompt: str
     rounds: List[RoundResult] = field(default_factory=list)
-    converged_at: Optional[int] = None     # Round index where hallucinations hit zero, else None
+    converged_at: Optional[int] = None
     max_rounds: int = 2
 
     @property
@@ -75,7 +43,6 @@ class CalibrationResult:
         return self.rounds[0].response if self.rounds else ""
 
     def hallucination_rate_per_round(self) -> List[float]:
-        """Fraction of entities flagged as hallucinated, per round."""
         rates = []
         for r in self.rounds:
             n = len(r.detection.verdicts)
@@ -84,27 +51,7 @@ class CalibrationResult:
 
 
 class CalibrationPipeline:
-    """
-    Run the full hallucination calibration loop end-to-end.
-
-    Args:
-        vlm:          VLMBackbone instance (e.g. Qwen25VLBackbone).
-        detector:     HallucinationDetector instance.
-        regenerator:  SelectiveRegenerator instance.
-        max_rounds:   Maximum number of re-prompting rounds (K). The
-                      professor's feedback specifies measuring at K=0, 1, 2,
-                      so the default is 2.
-        policy:       Threshold policy for hallucination detection.
-        tau:          Cutoff for ``absolute`` policy.
-        percentile:   Cutoff for ``percentile`` policy.
-
-    Example:
-        pipeline = CalibrationPipeline(vlm, detector, regenerator)
-        result = pipeline.run(image, "Describe this image.")
-        for r in result.rounds:
-            print(f"Round {r.round_index}: {r.response}")
-            print(f"  hallucinated: {r.num_hallucinated}/{len(r.detection.verdicts)}")
-    """
+    """Run the full hallucination calibration loop end-to-end."""
 
     def __init__(
         self,
@@ -115,7 +62,8 @@ class CalibrationPipeline:
         policy: ThresholdPolicy = "percentile",
         tau: float = 0.22,
         percentile: float = 30.0,
-        max_new_tokens: int = 96,
+        max_new_tokens: int = 128,
+        reprompt_temperature: float = 0.4,
     ) -> None:
         self.vlm = vlm
         self.detector = detector
@@ -125,6 +73,10 @@ class CalibrationPipeline:
         self.tau = tau
         self.percentile = percentile
         self.max_new_tokens = max_new_tokens
+        # Round 0 is greedy (deterministic baseline). Re-prompts use a
+        # mild sampling temperature so the model doesn't greedy-copy
+        # the previous response that's quoted in the corrective prompt.
+        self.reprompt_temperature = reprompt_temperature
 
     def run(
         self,
@@ -138,13 +90,17 @@ class CalibrationPipeline:
             max_rounds=self.max_rounds,
         )
 
-        # Round 0 — raw VLM output.
         current_prompt = initial_prompt
         for k in range(self.max_rounds + 1):
+            # Round 0 = greedy; subsequent rounds use sampling so re-prompt
+            # actually produces a different response.
+            temperature = 0.0 if k == 0 else self.reprompt_temperature
+
             vlm_response = self.vlm.generate(
                 image=image,
                 prompt=current_prompt,
                 max_new_tokens=self.max_new_tokens,
+                temperature=temperature,
             )
             response_text = vlm_response.text
 
@@ -170,13 +126,11 @@ class CalibrationPipeline:
                 )
             )
 
-            # Convergence check: stop early if nothing was flagged.
             if num_hallu == 0:
                 if result.converged_at is None:
                     result.converged_at = k
                 break
 
-            # Otherwise, build a re-prompt and continue (unless we've hit max).
             if k < self.max_rounds:
                 instruction = self.regenerator.build(
                     previous_response=response_text,
