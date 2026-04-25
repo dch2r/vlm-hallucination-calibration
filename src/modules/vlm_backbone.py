@@ -5,25 +5,16 @@ Provides a single ``VLMBackbone`` interface that wraps a pretrained VLM
 (Qwen2.5-VL by default) and exposes a ``generate(image, prompt)`` method
 returning the model's free-form text response.
 
-The backbone is designed to be backbone-agnostic at the call site: the rest
-of the pipeline (entity extraction, CLIP scoring, re-prompting) does not
-care which underlying model is used. To swap backbones, write a new
-subclass and pass it to the pipeline.
-
 Memory notes (T4, 15GB VRAM):
     * Qwen2.5-VL-7B int4  : ~5-6 GB  (recommended for T4)
     * Qwen2.5-VL-7B bf16  : ~15 GB   (tight, may OOM)
     * Qwen2.5-VL-3B fp16  : ~7 GB    (smaller fallback)
-
-The model is lazy-loaded inside ``__init__`` only when ``device`` is
-explicitly cuda. This lets us import the module on a CPU-only machine
-(e.g. a laptop) for syntax checking without triggering a 16GB download.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 import torch
 from PIL import Image
@@ -32,15 +23,15 @@ from PIL import Image
 @dataclass
 class VLMResponse:
     """Single VLM generation result."""
-    text: str                  # Decoded response text (no special tokens)
-    prompt: str                # The user prompt that was sent
-    backbone: str              # Model identifier, e.g. "Qwen/Qwen2.5-VL-7B-Instruct"
-    num_input_tokens: int      # Length of input ids (image+text)
-    num_output_tokens: int     # Length of generated ids
+    text: str
+    prompt: str
+    backbone: str
+    num_input_tokens: int
+    num_output_tokens: int
 
 
 class VLMBackbone:
-    """Abstract backbone interface — subclasses implement ``generate``."""
+    """Abstract backbone interface."""
 
     name: str = "abstract"
 
@@ -54,17 +45,33 @@ class VLMBackbone:
         raise NotImplementedError
 
 
-class Qwen25VLBackbone(VLMBackbone):
+def _resolve_qwen25_class():
     """
-    Qwen2.5-VL backbone with optional int4 quantization.
+    Locate the correct model class for Qwen2.5-VL.
 
-    Example:
-        from PIL import Image
-        backbone = Qwen25VLBackbone(quantize_int4=True)
-        img = Image.open("test.jpg").convert("RGB")
-        resp = backbone.generate(img, "Describe this image in one sentence.")
-        print(resp.text)
+    transformers 4.45+ exposes ``Qwen2_5_VLForConditionalGeneration``, but the
+    public top-level import path is unreliable across versions. We try the
+    most specific submodule first, then the top-level, then fall back to the
+    older Qwen2-VL class (which loads Qwen2.5 weights but warns).
     """
+    try:
+        from transformers.models.qwen2_5_vl.modeling_qwen2_5_vl import (
+            Qwen2_5_VLForConditionalGeneration,
+        )
+        return Qwen2_5_VLForConditionalGeneration
+    except Exception:
+        pass
+    try:
+        from transformers import Qwen2_5_VLForConditionalGeneration
+        return Qwen2_5_VLForConditionalGeneration
+    except Exception:
+        pass
+    from transformers import Qwen2VLForConditionalGeneration
+    return Qwen2VLForConditionalGeneration
+
+
+class Qwen25VLBackbone(VLMBackbone):
+    """Qwen2.5-VL backbone with optional int4 quantization."""
 
     def __init__(
         self,
@@ -74,26 +81,22 @@ class Qwen25VLBackbone(VLMBackbone):
         min_pixels: int = 256 * 28 * 28,
         max_pixels: int = 1280 * 28 * 28,
     ) -> None:
-        # Imports are scoped here so this module can be imported on CPU-only
-        # machines without pulling in heavy CUDA-only deps at import time.
-        from transformers import (
-            AutoProcessor,
-            Qwen2VLForConditionalGeneration,
-        )
+        from transformers import AutoProcessor
 
         self.model_id = model_id
         self.device = device
         self.name = f"qwen25vl({'int4' if quantize_int4 else 'bf16'})"
 
-        # Try to use the dedicated Qwen2_5 class if available; fall back to
-        # the Qwen2 class which loads Qwen2.5 weights identically.
-        try:
-            from transformers import Qwen2_5_VLForConditionalGeneration
-            model_cls = Qwen2_5_VLForConditionalGeneration
-        except ImportError:
-            model_cls = Qwen2VLForConditionalGeneration
+        model_cls = _resolve_qwen25_class()
+        print(f"[VLMBackbone] Using model class: {model_cls.__name__}")
 
-        load_kwargs = {"device_map": device, "trust_remote_code": False}
+        # device_map="auto" is required when using bitsandbytes 4-bit
+        # quantization so accelerate places quantized layers correctly
+        # without trying to initialize byte-typed weights on CPU first.
+        load_kwargs = {
+            "device_map": "auto",
+            "trust_remote_code": False,
+        }
 
         if quantize_int4:
             from transformers import BitsAndBytesConfig
@@ -130,7 +133,6 @@ class Qwen25VLBackbone(VLMBackbone):
     ) -> VLMResponse:
         img = self._load_image(image)
 
-        # Qwen uses an OpenAI-style chat message list with image placeholders.
         messages = [
             {
                 "role": "user",
@@ -141,7 +143,6 @@ class Qwen25VLBackbone(VLMBackbone):
             }
         ]
 
-        # Apply chat template -> textual prompt with <image> placeholders.
         text = self.processor.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True
         )
@@ -151,7 +152,10 @@ class Qwen25VLBackbone(VLMBackbone):
             images=[img],
             padding=True,
             return_tensors="pt",
-        ).to(self.device)
+        )
+        # Move tensors to the same device as the model's first parameter.
+        inputs = {k: v.to(self.model.device) if hasattr(v, "to") else v
+                  for k, v in inputs.items()}
 
         with torch.no_grad():
             generated_ids = self.model.generate(
@@ -161,12 +165,13 @@ class Qwen25VLBackbone(VLMBackbone):
                 temperature=temperature if temperature > 0.0 else 1.0,
             )
 
-        # Strip the input prompt tokens from the output.
-        input_len = inputs.input_ids.shape[1]
+        input_len = inputs["input_ids"].shape[1]
         output_ids = generated_ids[:, input_len:]
 
         decoded = self.processor.batch_decode(
-            output_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
+            output_ids,
+            skip_special_tokens=True,
+            clean_up_tokenization_spaces=False,
         )[0].strip()
 
         return VLMResponse(
