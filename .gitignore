@@ -50,3 +50,8 @@ results/runs/
 
 # Environment
 .env
+results/*.json
+results/qualitative/
+
+# COCO cache (downloaded annotations + images)
+.coco_cache/
