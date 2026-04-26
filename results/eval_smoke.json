@@ -1,0 +1,218 @@
+{
+  "config": {
+    "num_samples": 5,
+    "mock": false,
+    "prompt": "Describe this image in one sentence.",
+    "seed": 42
+  },
+  "summary": {
+    "num_samples": 5,
+    "wall_time_sec": 39.6,
+    "per_round": {
+      "round_0": {
+        "chair_i": 0.0,
+        "chair_s": 0.0,
+        "n_captions": 5,
+        "n_mentions": 7,
+        "n_hallucinations": 0
+      },
+      "round_1": {
+        "chair_i": 0.0,
+        "chair_s": 0.0,
+        "n_captions": 5,
+        "n_mentions": 8,
+        "n_hallucinations": 0
+      },
+      "round_2": {
+        "chair_i": 0.0,
+        "chair_s": 0.0,
+        "n_captions": 5,
+        "n_mentions": 7,
+        "n_hallucinations": 0
+      }
+    }
+  },
+  "per_image": [
+    {
+      "image_id": 272857,
+      "gt_objects": [
+        "traffic light"
+      ],
+      "rounds": [
+        {
+          "round": 0,
+          "response": "The image shows a street sign at the intersection of Bush and Obama streets, with a red traffic light visible below the signs against a clear blue sky.",
+          "mentioned_coco_objects": [],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 1
+        },
+        {
+          "round": 1,
+          "response": "At an intersection marked by street signs for Bush and Obama, a red traffic light is visible, with utility poles and wires in the background.",
+          "mentioned_coco_objects": [],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 1
+        },
+        {
+          "round": 2,
+          "response": "At an intersection marked by street signs reading \"Bush\" and \"Obama,\" a red traffic light hangs below, with utility poles and clear blue skies in the background.",
+          "mentioned_coco_objects": [],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 1
+        }
+      ],
+      "converged_at": null,
+      "elapsed_sec": 10.35
+    },
+    {
+      "image_id": 229096,
+      "gt_objects": [
+        "bus",
+        "dog"
+      ],
+      "rounds": [
+        {
+          "round": 0,
+          "response": "A red and white double-decker bus with an advertisement for \"Les Mis\u00e9rables\" is parked on a snowy street near a brick building.",
+          "mentioned_coco_objects": [
+            "bus"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 2
+        },
+        {
+          "round": 1,
+          "response": "A red and white double-decker bus displays an advertisement for \"Les Mis\u00e9rables\" on its side.",
+          "mentioned_coco_objects": [
+            "bus"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 0
+        }
+      ],
+      "converged_at": 1,
+      "elapsed_sec": 5.66
+    },
+    {
+      "image_id": 452866,
+      "gt_objects": [
+        "cake",
+        "chair",
+        "dining table",
+        "knife",
+        "person"
+      ],
+      "rounds": [
+        {
+          "round": 0,
+          "response": "A man and a woman are smiling as they prepare to cut a cake together, with the man holding a knife and the woman leaning in close.",
+          "mentioned_coco_objects": [
+            "cake",
+            "knife",
+            "person"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 4
+        },
+        {
+          "round": 1,
+          "response": "A person in a striped shirt and another in a patterned dress are leaning over a table, with one holding a knife poised above a decorated cake.",
+          "mentioned_coco_objects": [
+            "cake",
+            "dining table",
+            "knife",
+            "person"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 5
+        },
+        {
+          "round": 2,
+          "response": "A man and woman are preparing to cut a decorated cake placed on a table covered with a patterned cloth.",
+          "mentioned_coco_objects": [
+            "cake",
+            "dining table",
+            "person"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 4
+        }
+      ],
+      "converged_at": null,
+      "elapsed_sec": 9.5
+    },
+    {
+      "image_id": 360447,
+      "gt_objects": [
+        "baseball bat",
+        "bench",
+        "car",
+        "person"
+      ],
+      "rounds": [
+        {
+          "round": 0,
+          "response": "A man with red hair and a beard holds a baseball bat while standing near a batting cage, with other individuals and urban surroundings visible in the background.",
+          "mentioned_coco_objects": [
+            "baseball bat",
+            "person"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 1
+        },
+        {
+          "round": 1,
+          "response": "A man with red hair and a beard holds a baseball bat in a batting cage while other individuals are visible in the background.",
+          "mentioned_coco_objects": [
+            "baseball bat",
+            "person"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 0
+        }
+      ],
+      "converged_at": 1,
+      "elapsed_sec": 5.84
+    },
+    {
+      "image_id": 108338,
+      "gt_objects": [
+        "elephant"
+      ],
+      "rounds": [
+        {
+          "round": 0,
+          "response": "The image shows two elephants walking under the shade of acacia trees in a savanna landscape, with a clear blue sky and scattered clouds above.",
+          "mentioned_coco_objects": [
+            "elephant"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 1
+        },
+        {
+          "round": 1,
+          "response": "Two elephants stand beneath the shade of acacia trees in a savanna landscape under a clear blue sky.",
+          "mentioned_coco_objects": [
+            "elephant"
+          ],
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
+          "num_flagged_by_clip": 0
+        }
+      ],
+      "converged_at": 1,
+      "elapsed_sec": 6.0
+    }
+  ]
+}
