@@ -3,34 +3,32 @@
     "num_samples": 500,
     "mock": false,
     "prompt": "Describe this image in one sentence.",
-    "seed": 42,
-    "rescored": true,
-    "rescored_with": "src/metrics/chair.py (conservative synonym map, post-fix)"
+    "seed": 42
   },
   "summary": {
     "num_samples": 500,
     "wall_time_sec": 2996.1,
     "per_round": {
       "round_0": {
-        "chair_i": 0.0694,
-        "chair_s": 0.09,
+        "chair_i": 0.0853,
+        "chair_s": 0.12,
         "n_captions": 500,
-        "n_mentions": 706,
-        "n_hallucinations": 49
+        "n_mentions": 750,
+        "n_hallucinations": 64
       },
       "round_1": {
-        "chair_i": 0.0677,
-        "chair_s": 0.08,
+        "chair_i": 0.0822,
+        "chair_s": 0.104,
         "n_captions": 500,
-        "n_mentions": 635,
-        "n_hallucinations": 43
+        "n_mentions": 669,
+        "n_hallucinations": 55
       },
       "round_2": {
-        "chair_i": 0.066,
-        "chair_s": 0.076,
+        "chair_i": 0.0812,
+        "chair_s": 0.1,
         "n_captions": 500,
-        "n_mentions": 636,
-        "n_hallucinations": 42
+        "n_mentions": 665,
+        "n_hallucinations": 54
       }
     }
   },
@@ -129,7 +127,7 @@
           "response": "Two individuals are engaged in cutting a cake placed on a table covered with a patterned cloth.",
           "mentioned_coco_objects": [
             "cake",
-            "person"
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -139,8 +137,7 @@
           "round": 2,
           "response": "Two individuals are cutting into a cake together, smiling as they prepare to serve it.",
           "mentioned_coco_objects": [
-            "cake",
-            "person"
+            "cake"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -478,10 +475,13 @@
           "round": 0,
           "response": "A young child is sitting at a table, holding their hand near their mouth while looking to the side with a curious expression.",
           "mentioned_coco_objects": [
+            "dining table",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 3
         },
         {
@@ -546,6 +546,7 @@
           "response": "A young boy is excitedly cutting into a soccer ball-shaped cake on a table with other children and adults around.",
           "mentioned_coco_objects": [
             "cake",
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -656,8 +657,7 @@
           "round": 2,
           "response": "A double-decker bus is seen on a road with pedestrians near a bus stop, while another individual stands in front of a dark structure with visible text.",
           "mentioned_coco_objects": [
-            "bus",
-            "person"
+            "bus"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -734,10 +734,13 @@
           "round": 0,
           "response": "The image shows a green and white bus driving on a road surrounded by trees, with text in Tamil displayed on the front of the vehicle.",
           "mentioned_coco_objects": [
-            "bus"
+            "bus",
+            "car"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         },
         {
@@ -792,8 +795,7 @@
           "response": "The image shows a modern kitchen with dark cabinets, stainless steel appliances, and a tiled backsplash, featuring a refrigerator, microwave, oven, and sink area.",
           "mentioned_coco_objects": [
             "microwave",
-            "refrigerator",
-            "sink"
+            "refrigerator"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -816,7 +818,6 @@
           "response": "The image shows a group of people dressed in winter sports gear, including helmets and snowboards, gathered outdoors, possibly at a ski or snowboarding event.",
           "mentioned_coco_objects": [
             "person",
-            "skis",
             "snowboard"
           ],
           "hallucinated_coco_objects": [],
@@ -979,7 +980,6 @@
           "response": "The image shows two individuals in the ocean, one standing on a surfboard and another on a small inflatable boat, with waves visible in the foreground.",
           "mentioned_coco_objects": [
             "boat",
-            "person",
             "surfboard"
           ],
           "hallucinated_coco_objects": [],
@@ -1065,7 +1065,6 @@
           "round": 0,
           "response": "Two individuals wearing blue uniforms and caps are working behind the counter of a deli or sandwich shop, preparing food.",
           "mentioned_coco_objects": [
-            "person",
             "sandwich"
           ],
           "hallucinated_coco_objects": [],
@@ -1076,7 +1075,6 @@
           "round": 1,
           "response": "Two individuals in blue uniforms work behind a counter in a deli or sandwich shop, preparing food.",
           "mentioned_coco_objects": [
-            "person",
             "sandwich"
           ],
           "hallucinated_coco_objects": [],
@@ -1100,18 +1098,20 @@
           "round": 0,
           "response": "A group of people is gathered around a table filled with pizza boxes, smiling and enjoying a casual gathering or party.",
           "mentioned_coco_objects": [
+            "dining table",
             "person",
             "pizza"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 3
         },
         {
           "round": 1,
           "response": "A group of individuals gather around pizza boxes, enjoying a casual meal together.",
           "mentioned_coco_objects": [
-            "person",
             "pizza"
           ],
           "hallucinated_coco_objects": [],
@@ -1122,11 +1122,13 @@
           "round": 2,
           "response": "A group of individuals gather around a table filled with multiple pizza boxes, enjoying a casual gathering.",
           "mentioned_coco_objects": [
-            "person",
+            "dining table",
             "pizza"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         }
       ],
@@ -1247,7 +1249,8 @@
           "round": 1,
           "response": "Golden sunlight illuminates a street scene where water sprays from a fire hydrant, creating a misty effect near parked cars.",
           "mentioned_coco_objects": [
-            "car"
+            "car",
+            "fire hydrant"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -1293,6 +1296,7 @@
           "response": "A group of children and adults gather around a table, celebrating with a decorated cake featuring lit candles, surrounded by party decorations and balloons.",
           "mentioned_coco_objects": [
             "cake",
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -1525,19 +1529,20 @@
           "round": 1,
           "response": "Two individuals are using laptops with screens displaying webpages, engaged in computer activities on a wooden table.",
           "mentioned_coco_objects": [
-            "laptop",
-            "person"
+            "dining table",
+            "laptop"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         },
         {
           "round": 2,
           "response": "Two individuals are engaged in computer activities using laptops, with one screen displaying a webpage featuring multiple elements.",
           "mentioned_coco_objects": [
-            "laptop",
-            "person"
+            "laptop"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -1628,9 +1633,13 @@
         {
           "round": 0,
           "response": "The image captures a dynamic night scene of a city intersection, with light trails from moving vehicles creating streaks across the road and surrounding area.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 0
         }
       ],
@@ -1683,9 +1692,7 @@
         {
           "round": 0,
           "response": "Two individuals are sitting on the floor, each engaged with their own electronic devices while wearing earphones, suggesting they might be listening to music or participating in an online activity.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -1693,9 +1700,7 @@
         {
           "round": 1,
           "response": "Two individuals are seated against a wall, each engrossed in their own electronic device while wearing earphones, suggesting they might be listening to music or engaging in online activities.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -1703,9 +1708,7 @@
         {
           "round": 2,
           "response": "Two individuals are seated on the floor, each engaged with their own electronic devices, wearing earphones, suggesting they might be listening to music or participating in online activities.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -1822,13 +1825,10 @@
           "round": 0,
           "response": "Two cats, one orange and white and the other black and white, are sitting on a patterned rug in a living room with furniture and decor visible in the background.",
           "mentioned_coco_objects": [
-            "cat",
-            "orange"
+            "cat"
           ],
-          "hallucinated_coco_objects": [
-            "orange"
-          ],
-          "has_hallucination": true,
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
           "num_flagged_by_clip": 0
         }
       ],
@@ -1890,8 +1890,7 @@
           "round": 0,
           "response": "The image shows four people standing on a snowy slope, dressed in winter clothing and equipped with ski gear, with a picturesque mountainous backdrop under a clear blue sky.",
           "mentioned_coco_objects": [
-            "person",
-            "skis"
+            "person"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -2001,11 +2000,14 @@
           "round": 0,
           "response": "Two children are engaged with a laptop at a table, while others sit and interact in the background in what appears to be a classroom or community setting.",
           "mentioned_coco_objects": [
+            "dining table",
             "laptop",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 0
         }
       ],
@@ -2231,7 +2233,8 @@
           "round": 0,
           "response": "The image shows a dessert table with various cakes, pastries, and cupcakes displayed on a white tablecloth, likely at an event or gathering.",
           "mentioned_coco_objects": [
-            "cake"
+            "cake",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -2531,7 +2534,9 @@
         {
           "round": 0,
           "response": "The image shows a table filled with a variety of food items, including fresh vegetables, fruits, snacks, and packaged foods, suggesting a gathering or party setting.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "dining table"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -2651,13 +2656,10 @@
           "round": 1,
           "response": "A small bird with a white face and orange underside perches on a branch.",
           "mentioned_coco_objects": [
-            "bird",
-            "orange"
+            "bird"
           ],
-          "hallucinated_coco_objects": [
-            "orange"
-          ],
-          "has_hallucination": true,
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
           "num_flagged_by_clip": 0
         }
       ],
@@ -2676,6 +2678,7 @@
           "response": "A person wearing a cap and sandals is sitting on a stone bench near a water feature, looking at their phone.",
           "mentioned_coco_objects": [
             "bench",
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [
@@ -2689,6 +2692,7 @@
           "response": "A person sits on a stone bench, engrossed in their phone, with a backdrop of cascading water.",
           "mentioned_coco_objects": [
             "bench",
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [
@@ -2702,6 +2706,7 @@
           "response": "A person wearing a cap and sandals sits on a stone bench, engrossed in their phone.",
           "mentioned_coco_objects": [
             "bench",
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [
@@ -3418,9 +3423,7 @@
         {
           "round": 2,
           "response": "Two individuals are engaged in an intense game involving a flying disc, their motion captured mid-action on a grassy field.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 2
@@ -3444,10 +3447,13 @@
           "response": "A man in a suit walks through a bus terminal holding a sign that reads \"SKOSS PASSENGERS,\" with a bus and another vehicle visible in the background.",
           "mentioned_coco_objects": [
             "bus",
+            "car",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         },
         {
@@ -3487,28 +3493,22 @@
           "round": 0,
           "response": "A man carrying an orange surfboard walks along the sandy beach, facing the ocean with waves and lush greenery in the background.",
           "mentioned_coco_objects": [
-            "orange",
             "person",
             "surfboard"
           ],
-          "hallucinated_coco_objects": [
-            "orange"
-          ],
-          "has_hallucination": true,
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
           "num_flagged_by_clip": 1
         },
         {
           "round": 1,
           "response": "A man with an orange surfboard walks along a sandy beach as waves gently roll in.",
           "mentioned_coco_objects": [
-            "orange",
             "person",
             "surfboard"
           ],
-          "hallucinated_coco_objects": [
-            "orange"
-          ],
-          "has_hallucination": true,
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
           "num_flagged_by_clip": 0
         }
       ],
@@ -3831,6 +3831,7 @@
           "response": "A laptop is set up on a wooden table outdoors, surrounded by lush greenery and a bench, suggesting a peaceful garden setting.",
           "mentioned_coco_objects": [
             "bench",
+            "dining table",
             "laptop"
           ],
           "hallucinated_coco_objects": [],
@@ -3911,7 +3912,8 @@
             "book",
             "keyboard",
             "laptop",
-            "mouse"
+            "mouse",
+            "tv"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -3923,7 +3925,8 @@
           "mentioned_coco_objects": [
             "keyboard",
             "laptop",
-            "mouse"
+            "mouse",
+            "tv"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -4016,6 +4019,7 @@
           "response": "The image shows a man sitting on a boat, holding a flip phone, with luggage and other items visible around him.",
           "mentioned_coco_objects": [
             "boat",
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [
@@ -4069,10 +4073,13 @@
           "round": 0,
           "response": "The image captures a bustling urban street scene with a train passing by, pedestrians waiting at a crossing, and a mix of vehicles and storefronts in the background.",
           "mentioned_coco_objects": [
+            "car",
             "train"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 0
         }
       ],
@@ -4135,7 +4142,8 @@
           "response": "A creatively decorated cake resembling a bear sits on a table alongside a display of colorful cake pops and a box of Cadbury's chocolate.",
           "mentioned_coco_objects": [
             "bear",
-            "cake"
+            "cake",
+            "dining table"
           ],
           "hallucinated_coco_objects": [
             "bear"
@@ -4206,6 +4214,7 @@
           "response": "The image depicts a street scene in a rural area where an elephant is being ridden by a person, while other individuals and vehicles, including bicycles and motorcycles, navigate the road alongside.",
           "mentioned_coco_objects": [
             "bicycle",
+            "car",
             "elephant",
             "motorcycle",
             "person"
@@ -4218,6 +4227,7 @@
           "round": 1,
           "response": "An elephant is being ridden down a road, accompanied by vehicles and surrounded by structures and utility poles.",
           "mentioned_coco_objects": [
+            "car",
             "elephant"
           ],
           "hallucinated_coco_objects": [],
@@ -4229,6 +4239,7 @@
           "response": "An elephant walks down a road alongside vehicles as people ride bicycles nearby in a bustling street scene.",
           "mentioned_coco_objects": [
             "bicycle",
+            "car",
             "elephant",
             "person"
           ],
@@ -4252,9 +4263,7 @@
         {
           "round": 0,
           "response": "The image shows a street scene with parking meters, scaffolding on a construction site in the background, and a \"No Parking\" sign indicating restrictions during certain hours.",
-          "mentioned_coco_objects": [
-            "parking meter"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -4262,9 +4271,7 @@
         {
           "round": 1,
           "response": "Parking meters line a street near a construction site under cloudy skies, with visible restrictions on parking posted nearby.",
-          "mentioned_coco_objects": [
-            "parking meter"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -4272,9 +4279,7 @@
         {
           "round": 2,
           "response": "Parking meters line the sidewalk next to a street with a construction site in the background, where visible restrictions are marked on signs.",
-          "mentioned_coco_objects": [
-            "parking meter"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -4294,6 +4299,7 @@
           "round": 0,
           "response": "The image shows a person holding a green flip phone, looking at it with a slight smile.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -4356,7 +4362,8 @@
           "round": 0,
           "response": "The image shows a cluttered desk with a Microsoft keyboard, a computer monitor, and various cables, including a USB drive and an iPod dock, along with other small items like coins and a pen.",
           "mentioned_coco_objects": [
-            "keyboard"
+            "keyboard",
+            "tv"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -4366,7 +4373,8 @@
           "round": 1,
           "response": "A cluttered desk features a Microsoft keyboard, a computer monitor, a USB drive, an iPod dock, and other small items, with a pen lying nearby.",
           "mentioned_coco_objects": [
-            "keyboard"
+            "keyboard",
+            "tv"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -4525,8 +4533,7 @@
           "round": 1,
           "response": "In the past, two individuals interact near a horse-drawn carriage on a street lined with buildings and trees.",
           "mentioned_coco_objects": [
-            "horse",
-            "person"
+            "horse"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -5057,7 +5064,6 @@
           "response": "Two individuals are kiteboarding on a wave, with one riding a surfboard and the other using a kite for propulsion.",
           "mentioned_coco_objects": [
             "kite",
-            "person",
             "surfboard"
           ],
           "hallucinated_coco_objects": [
@@ -5247,11 +5253,14 @@
           "round": 1,
           "response": "A person sits at a table with a laptop displaying a webpage, surrounded by small framed images and scattered items on the surface.",
           "mentioned_coco_objects": [
+            "dining table",
             "laptop",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         },
         {
@@ -5320,6 +5329,7 @@
           "round": 0,
           "response": "The image shows a formal dining setting with multiple people seated at long tables, engaged in conversation and enjoying a meal or event.",
           "mentioned_coco_objects": [
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -5496,6 +5506,7 @@
           "round": 0,
           "response": "A man enjoys a meal outdoors at a restaurant, with a partially eaten pizza and a glass of white wine on the table.",
           "mentioned_coco_objects": [
+            "dining table",
             "person",
             "pizza"
           ],
@@ -5507,6 +5518,7 @@
           "round": 1,
           "response": "A man enjoys a meal at an outdoor restaurant, with a partially eaten pizza and white wine on the table.",
           "mentioned_coco_objects": [
+            "dining table",
             "person",
             "pizza"
           ],
@@ -5531,11 +5543,14 @@
           "round": 0,
           "response": "The image shows a table with several small pizzas on a tray, accompanied by glasses of red wine and water, with a child in the background.",
           "mentioned_coco_objects": [
+            "dining table",
             "person",
             "pizza"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 5
         },
         {
@@ -5997,7 +6012,8 @@
           "round": 0,
           "response": "The image depicts a vintage kitchen with a black-and-white checkered floor, featuring a small dining table and chairs, an old-fashioned stove, and various kitchen appliances and decor from the mid-20th century.",
           "mentioned_coco_objects": [
-            "chair"
+            "chair",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -6074,6 +6090,7 @@
           "response": "The image shows a cozy living room with a sofa, armchair, coffee table, and a television set, all arranged around a central area rug, with warm lighting and decorative elements like framed pictures and a lamp.",
           "mentioned_coco_objects": [
             "couch",
+            "dining table",
             "tv"
           ],
           "hallucinated_coco_objects": [],
@@ -6371,7 +6388,8 @@
           "response": "A man dressed in a dark suit and tie sits with his hands clasped on a light-colored couch against a plain wall.",
           "mentioned_coco_objects": [
             "couch",
-            "person"
+            "person",
+            "tie"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -6406,6 +6424,7 @@
           "response": "The image shows a person riding a dirt bike on a paved road, with several vehicles and other riders in the background near a sandy area surrounded by trees.",
           "mentioned_coco_objects": [
             "bicycle",
+            "car",
             "person"
           ],
           "hallucinated_coco_objects": [
@@ -6418,7 +6437,8 @@
           "round": 1,
           "response": "A dirt bike rider navigates through a parking lot surrounded by several vehicles, with other riders in the background near sandy terrain.",
           "mentioned_coco_objects": [
-            "bicycle"
+            "bicycle",
+            "car"
           ],
           "hallucinated_coco_objects": [
             "bicycle"
@@ -6443,18 +6463,18 @@
           "round": 0,
           "response": "The image shows three individuals sitting at a table, each engrossed in their smartphones, with papers and notebooks on the table in front of them.",
           "mentioned_coco_objects": [
-            "person"
+            "dining table"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         },
         {
           "round": 1,
           "response": "Three individuals are focused on their smartphones in what appears to be an indoor setting with papers and other materials visible around them.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -6463,10 +6483,12 @@
           "round": 2,
           "response": "Three individuals are seated at a table, each engaged with their smartphone, while papers lie open in front of them.",
           "mentioned_coco_objects": [
-            "person"
+            "dining table"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         }
       ],
@@ -6493,9 +6515,7 @@
         {
           "round": 1,
           "response": "A surfer rides a wave on a surfboard, showcasing skillful maneuvering as the water sprays around them.",
-          "mentioned_coco_objects": [
-            "surfboard"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -6924,7 +6944,9 @@
         {
           "round": 0,
           "response": "The image shows a dimly lit table with plates of food, glasses, and cutlery, creating a cozy and intimate dining atmosphere.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "dining table"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -7025,21 +7047,27 @@
           "round": 0,
           "response": "The image shows a group of people in an office setting, with a table filled with boxes of donuts and other snacks, suggesting a break or social gathering.",
           "mentioned_coco_objects": [
+            "dining table",
             "donut",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 3
         },
         {
           "round": 1,
           "response": "A variety of donuts and other snacks are displayed on a table during a break or social gathering in an office setting.",
           "mentioned_coco_objects": [
+            "dining table",
             "donut"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         },
         {
@@ -7070,9 +7098,7 @@
         {
           "round": 0,
           "response": "The image shows a busy urban street with pedestrians crossing the road at a crosswalk, traffic lights, and various signs indicating traffic rules and directions.",
-          "mentioned_coco_objects": [
-            "traffic light"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -7093,25 +7119,37 @@
         {
           "round": 0,
           "response": "A black police vehicle marked \"BOMB SQUAD\" is parked on a city street, with a pedestrian crossing the road nearby.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         },
         {
           "round": 1,
           "response": "A black police vehicle marked \"BOMB SQUAD\" is parked on a city street as a pedestrian crosses the intersection nearby.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         },
         {
           "round": 2,
           "response": "A black police vehicle marked \"BOMB SQUAD\" is parked near a pedestrian crossing on a sunny day.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         }
       ],
@@ -7435,10 +7473,13 @@
           "round": 2,
           "response": "A flock of sheep crosses a road in front of a parked vehicle, with a mountainous landscape in the background.",
           "mentioned_coco_objects": [
+            "car",
             "sheep"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         }
       ],
@@ -7682,7 +7723,9 @@
         {
           "round": 1,
           "response": "A ferry with several vehicles is being loaded onto it by crew members on a calm body of water.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "car"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 2
@@ -7690,7 +7733,9 @@
         {
           "round": 2,
           "response": "A ferry carries several vehicles across the water, with crew members attending to the operation.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "car"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -8017,7 +8062,9 @@
         {
           "round": 0,
           "response": "The image shows a trolleybus labeled \"14 Mission Ferry Plaza\" operating on a street with tram tracks, surrounded by urban buildings and parked vehicles.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "car"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -8116,7 +8163,8 @@
           "round": 0,
           "response": "A small potted plant with green leaves sits on a wooden table, surrounded by pebbles and rocks, with a wine cooler and chair in the background.",
           "mentioned_coco_objects": [
-            "chair"
+            "chair",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -8125,7 +8173,9 @@
         {
           "round": 1,
           "response": "A small potted plant with green leaves sits on a wooden table in front of a wine cooler.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "dining table"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -8190,9 +8240,7 @@
         {
           "round": 0,
           "response": "A group of individuals dressed in formal black attire is gathered indoors, possibly at an event or performance setting, with some holding papers and others standing attentively.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -8374,17 +8422,25 @@
         {
           "round": 0,
           "response": "A miniature model of a Chicago Water Taxi is shown on the river, with a blurred background of city buildings and a bridge.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         },
         {
           "round": 1,
           "response": "A miniature model of a Chicago Water Taxi glides across a river, with a bridge and cityscape in the background.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 0
         }
       ],
@@ -8450,6 +8506,7 @@
           "round": 0,
           "response": "The image shows a group of people, including children and an adult, gathered around a table filled with food and decorations for what appears to be a celebration or party.",
           "mentioned_coco_objects": [
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -8460,7 +8517,8 @@
           "round": 1,
           "response": "A table is set with various foods and decorations for a celebration or party, featuring a cake and balloons in the background.",
           "mentioned_coco_objects": [
-            "cake"
+            "cake",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -8640,7 +8698,6 @@
           "round": 0,
           "response": "The image shows two individuals walking on a snowy slope, carrying skis and poles, with a scenic mountain range and ski resort structures in the background under a clear blue sky.",
           "mentioned_coco_objects": [
-            "person",
             "skis"
           ],
           "hallucinated_coco_objects": [],
@@ -8651,7 +8708,6 @@
           "round": 1,
           "response": "Two individuals are walking on a snowy slope with skis and poles, surrounded by ski resort structures and a scenic mountain range under a clear blue sky.",
           "mentioned_coco_objects": [
-            "person",
             "skis"
           ],
           "hallucinated_coco_objects": [],
@@ -8662,7 +8718,6 @@
           "round": 2,
           "response": "Two individuals are walking on a snowy slope carrying skis and poles, with ski resort structures and a scenic mountain range under a clear blue sky in the background.",
           "mentioned_coco_objects": [
-            "person",
             "skis"
           ],
           "hallucinated_coco_objects": [],
@@ -8925,6 +8980,7 @@
           "round": 0,
           "response": "The image shows a freshly baked pizza with pepperoni and mozzarella, alongside a plate of clams in a light sauce garnished with lemon and herbs, served on a wooden table.",
           "mentioned_coco_objects": [
+            "dining table",
             "pizza"
           ],
           "hallucinated_coco_objects": [],
@@ -8945,6 +9001,7 @@
           "round": 2,
           "response": "A freshly baked pizza sits on a wooden table alongside a fork and napkin, accompanied by another plate holding a dish that includes clams and herbs.",
           "mentioned_coco_objects": [
+            "dining table",
             "fork",
             "pizza"
           ],
@@ -8994,10 +9051,13 @@
           "round": 0,
           "response": "A commercial airplane is parked at an airport gate during twilight, with ground service vehicles and equipment nearby.",
           "mentioned_coco_objects": [
-            "airplane"
+            "airplane",
+            "car"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 0
         }
       ],
@@ -9019,7 +9079,8 @@
           "round": 0,
           "response": "The image shows a bus station with several buses parked under a large, modern canopy structure, with a street and some vehicles visible in the foreground.",
           "mentioned_coco_objects": [
-            "bus"
+            "bus",
+            "car"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -9093,7 +9154,8 @@
           "response": "The image shows a breakfast setup with a plate of food, a cup of coffee, a glass of what appears to be a smoothie or milkshake, and a bottle of Tabasco sauce on a table.",
           "mentioned_coco_objects": [
             "bottle",
-            "cup"
+            "cup",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -9104,7 +9166,8 @@
           "response": "A breakfast setup featuring a plate with food, a cup of coffee, and a bottle of Tabasco sauce on a table.",
           "mentioned_coco_objects": [
             "bottle",
-            "cup"
+            "cup",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -9114,7 +9177,8 @@
           "round": 2,
           "response": "A breakfast setup featuring a plate with food, a cup of coffee, and a glass containing a creamy beverage, all arranged on a table.",
           "mentioned_coco_objects": [
-            "cup"
+            "cup",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -9366,7 +9430,6 @@
           "round": 2,
           "response": "In a snowy landscape, individuals in winter outfits prepare for a ski activity near a train, with skis prominently displayed.",
           "mentioned_coco_objects": [
-            "person",
             "skis",
             "train"
           ],
@@ -9428,9 +9491,7 @@
         {
           "round": 2,
           "response": "Two individuals in wetsuits are in shallow water with small waves, one holding a board.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -9606,18 +9667,25 @@
           "round": 1,
           "response": "A person is setting up a small table with items in an open, arid landscape under a bright blue sky dotted with scattered clouds.",
           "mentioned_coco_objects": [
+            "dining table",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 4
         },
         {
           "round": 2,
           "response": "A small table sits in an open, arid landscape under a bright blue sky with scattered clouds.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "dining table"
+          ],
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         }
       ],
@@ -9643,6 +9711,7 @@
           "response": "A young girl is blowing out candles on a birthday cake while two adults look on, with a festive table setting and flowers in the background.",
           "mentioned_coco_objects": [
             "cake",
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -9654,6 +9723,7 @@
           "response": "Two adults and a child sit around a table with a birthday cake adorned with lit candles, surrounded by decorative items and a lamp in the background.",
           "mentioned_coco_objects": [
             "cake",
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -9906,6 +9976,7 @@
           "round": 0,
           "response": "A woman is smiling while talking on her phone, standing near a curtain and a brick wall.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -9916,6 +9987,7 @@
           "round": 1,
           "response": "A woman is smiling while holding a phone near her ear, standing next to a curtain.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -9926,6 +9998,7 @@
           "round": 2,
           "response": "A woman in a white cardigan stands near a curtain while holding a phone to her ear.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -9980,6 +10053,7 @@
           "round": 0,
           "response": "The image shows a lively outdoor dining area with red umbrellas, where people are seated at tables enjoying meals and drinks, with a cityscape featuring tall buildings visible through the windows in the background.",
           "mentioned_coco_objects": [
+            "dining table",
             "person",
             "umbrella"
           ],
@@ -10011,7 +10085,8 @@
             "bottle",
             "keyboard",
             "laptop",
-            "mouse"
+            "mouse",
+            "tv"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -10022,7 +10097,8 @@
           "response": "A workspace setup featuring multiple devices, including two laptops and a desktop monitor, along with various accessories such as keyboards and other small items.",
           "mentioned_coco_objects": [
             "keyboard",
-            "laptop"
+            "laptop",
+            "tv"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -10191,7 +10267,6 @@
           "round": 1,
           "response": "Two individuals in wedding attire share a playful moment outdoors, one holding an umbrella and the other holding a bouquet of flowers.",
           "mentioned_coco_objects": [
-            "person",
             "umbrella"
           ],
           "hallucinated_coco_objects": [],
@@ -10305,8 +10380,7 @@
           "round": 0,
           "response": "Two individuals are engaged in a game of ultimate frisbee, with one player reaching out to catch the disc while the other attempts to block or intercept.",
           "mentioned_coco_objects": [
-            "frisbee",
-            "person"
+            "frisbee"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -10790,7 +10864,8 @@
           "response": "A calico cat is curled up and sleeping on an orange office chair with a wooden floor and a table in the background.",
           "mentioned_coco_objects": [
             "cat",
-            "chair"
+            "chair",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -10802,7 +10877,8 @@
           "mentioned_coco_objects": [
             "cat",
             "chair",
-            "clock"
+            "clock",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -10813,7 +10889,8 @@
           "response": "A calico cat rests peacefully on an orange office chair in front of a table.",
           "mentioned_coco_objects": [
             "cat",
-            "chair"
+            "chair",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -10912,7 +10989,9 @@
         {
           "round": 2,
           "response": "A skateboarder executes an aerial trick in mid-air while others watch and hold skateboards nearby.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "skateboard"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -11046,6 +11125,7 @@
           "response": "A rustic wooden table is adorned with a woven basket filled with fresh fruits, a small bowl of dates, and a vase of vibrant purple flowers.",
           "mentioned_coco_objects": [
             "bowl",
+            "dining table",
             "vase"
           ],
           "hallucinated_coco_objects": [],
@@ -11109,7 +11189,8 @@
           "round": 1,
           "response": "A modern living room features a sofa set with vibrant red cushions, a sleek coffee table, and a clean, open floor plan leading into a dining area.",
           "mentioned_coco_objects": [
-            "couch"
+            "couch",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -11119,7 +11200,8 @@
           "round": 2,
           "response": "A modern living room features a sleek coffee table in the center, surrounded by sofas with vibrant red cushions, set against a clean, open floor plan.",
           "mentioned_coco_objects": [
-            "couch"
+            "couch",
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -11175,6 +11257,7 @@
           "round": 0,
           "response": "A man is sitting at an outdoor table, enjoying a meal that includes a salad, bread, cheese, and a sandwich, with a scenic garden backdrop.",
           "mentioned_coco_objects": [
+            "dining table",
             "person",
             "sandwich"
           ],
@@ -11327,10 +11410,13 @@
           "round": 1,
           "response": "A cozy living room features mid-century modern furniture, including a wooden coffee table and a television on a matching entertainment unit.",
           "mentioned_coco_objects": [
+            "dining table",
             "tv"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 0
         }
       ],
@@ -11354,6 +11440,8 @@
           "response": "A young boy is sitting at a table with a bowl of cereal, holding a phone to his ear and wearing a tie, appearing to be engaged in a conversation while eating breakfast.",
           "mentioned_coco_objects": [
             "bowl",
+            "cell phone",
+            "dining table",
             "person",
             "tie"
           ],
@@ -11365,6 +11453,8 @@
           "round": 1,
           "response": "A young boy sits at a wooden table, holding a phone near his ear while looking directly at the camera.",
           "mentioned_coco_objects": [
+            "cell phone",
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -11376,6 +11466,8 @@
           "response": "A young boy holds a phone to his ear while sitting at a table with a bowl of cereal in front of him.",
           "mentioned_coco_objects": [
             "bowl",
+            "cell phone",
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -11484,6 +11576,7 @@
           "round": 0,
           "response": "The image shows a meal setup with a plate of tuna salad topped with vegetables, a piece of bread, and a side dish of grilled food on a separate plate, accompanied by a glass of milk, an ashtray, and a potted plant on a table.",
           "mentioned_coco_objects": [
+            "dining table",
             "potted plant"
           ],
           "hallucinated_coco_objects": [],
@@ -11606,7 +11699,7 @@
           "round": 0,
           "response": "The image shows a collection of personal items laid out on a white surface, including a red purse, an iPod, coins, a mobile phone, a pen, a keychain, and other small accessories.",
           "mentioned_coco_objects": [
-            "handbag"
+            "cell phone"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -11616,7 +11709,7 @@
           "round": 1,
           "response": "A collection of personal items includes a red purse, an iPod, coins, a mobile phone, pens, a keychain, and other small accessories arranged on a flat surface.",
           "mentioned_coco_objects": [
-            "handbag"
+            "cell phone"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -11626,7 +11719,7 @@
           "round": 2,
           "response": "A collection of personal items laid out on a surface includes a red purse, an iPod, coins, a mobile phone, pens, a keychain, and other small accessories.",
           "mentioned_coco_objects": [
-            "handbag"
+            "cell phone"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -11682,9 +11775,7 @@
         {
           "round": 0,
           "response": "The image shows two individuals wearing life jackets and helmets, sitting in a red kayak on a calm waterway surrounded by greenery.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 3
@@ -11702,9 +11793,7 @@
         {
           "round": 2,
           "response": "Three individuals wearing life jackets are seated in a red kayak on a calm waterway, enjoying their time together.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -11877,8 +11966,7 @@
           "round": 0,
           "response": "A group of skiers, including adults and children, enjoy a sunny day on a snowy slope with ski lifts visible in the background.",
           "mentioned_coco_objects": [
-            "person",
-            "skis"
+            "person"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -11888,8 +11976,7 @@
           "round": 1,
           "response": "A group of skiers, including adults and children, navigate a snowy slope with ski lifts visible in the background.",
           "mentioned_coco_objects": [
-            "person",
-            "skis"
+            "person"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -12006,7 +12093,9 @@
         {
           "round": 0,
           "response": "The image shows a white mobile phone labeled \"SMARTPHONE\" displayed on a stand, surrounded by other similar phones in the background.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "cell phone"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -12146,9 +12235,7 @@
         {
           "round": 1,
           "response": "A modern kitchen features sleek cabinetry, a built-in oven, and granite countertops, creating a stylish and functional space.",
-          "mentioned_coco_objects": [
-            "oven"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -12168,7 +12255,9 @@
         {
           "round": 0,
           "response": "A baby is sitting on a blanket outdoors, holding a toy phone and smiling at the camera with a grassy park and houses in the background.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "cell phone"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -12176,7 +12265,9 @@
         {
           "round": 1,
           "response": "A baby sits on a colorful blanket in a grassy park, holding a toy phone in one hand and a camera in the other.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "cell phone"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 2
@@ -12184,7 +12275,9 @@
         {
           "round": 2,
           "response": "A baby sits on a towel in a grassy park, holding a toy phone.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "cell phone"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -12324,7 +12417,9 @@
         {
           "round": 0,
           "response": "The image shows a plate of food featuring an omelette and a bagel with sesame seeds, served on a yellow table with other dishes and condiments in the background.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "dining table"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 2
@@ -12332,7 +12427,9 @@
         {
           "round": 1,
           "response": "A plate holds a folded omelette alongside other dishes and condiments on a yellow table.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "dining table"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -12399,11 +12496,14 @@
           "round": 0,
           "response": "The image shows a group of children sitting around a table with partially eaten pizzas and drinks, suggesting they are enjoying a meal together.",
           "mentioned_coco_objects": [
+            "dining table",
             "person",
             "pizza"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         },
         {
@@ -12411,10 +12511,13 @@
           "response": "A meal featuring partially eaten pizzas on metal trays sits on a table, with some cups and glasses scattered around.",
           "mentioned_coco_objects": [
             "cup",
+            "dining table",
             "pizza"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         },
         {
@@ -12422,10 +12525,13 @@
           "response": "A table with partially eaten pizzas on metal trays, surrounded by cups and plates, indicating a meal in progress.",
           "mentioned_coco_objects": [
             "cup",
+            "dining table",
             "pizza"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         }
       ],
@@ -12446,7 +12552,6 @@
           "round": 0,
           "response": "Three individuals are gathered around a partially prepared pizza, smiling and pointing at it in a kitchen setting.",
           "mentioned_coco_objects": [
-            "person",
             "pizza"
           ],
           "hallucinated_coco_objects": [],
@@ -12534,6 +12639,8 @@
           "round": 0,
           "response": "A group of children and adults are gathered around a picnic table enjoying pizza and orange slices outdoors.",
           "mentioned_coco_objects": [
+            "dining table",
+            "orange",
             "person",
             "pizza"
           ],
@@ -12545,6 +12652,7 @@
           "round": 1,
           "response": "Children gather around a picnic table, enjoying slices of pizza.",
           "mentioned_coco_objects": [
+            "dining table",
             "person",
             "pizza"
           ],
@@ -12636,11 +12744,14 @@
           "round": 0,
           "response": "A group of people is gathered around a table with multiple laptops, seemingly engaged in a collaborative or educational activity.",
           "mentioned_coco_objects": [
+            "dining table",
             "laptop",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 0
         }
       ],
@@ -12714,9 +12825,7 @@
         {
           "round": 0,
           "response": "Two individuals wearing ski gear are seated on a chairlift above a snowy mountain landscape, with skiers and snow-covered peaks visible below.",
-          "mentioned_coco_objects": [
-            "person"
-          ],
+          "mentioned_coco_objects": [],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -12737,7 +12846,9 @@
         {
           "round": 0,
           "response": "The image depicts a bustling urban street at night, filled with taxis and other vehicles, illuminated by vibrant neon signs and streetlights.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "car"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -12760,6 +12871,7 @@
           "round": 0,
           "response": "The image shows an elephant carrying a rider on its back, walking along a busy street with vehicles and pedestrians in the background.",
           "mentioned_coco_objects": [
+            "car",
             "elephant"
           ],
           "hallucinated_coco_objects": [],
@@ -13079,22 +13191,28 @@
           "round": 0,
           "response": "A cozy living room with a dog resting on the floor, a lit candle on the coffee table, and a television playing in the background.",
           "mentioned_coco_objects": [
+            "dining table",
             "dog",
             "tv"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         },
         {
           "round": 1,
           "response": "A cozy living room features a dog resting on the floor near a coffee table with snacks, while a television plays in the background.",
           "mentioned_coco_objects": [
+            "dining table",
             "dog",
             "tv"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 0
         }
       ],
@@ -13447,7 +13565,8 @@
           "round": 0,
           "response": "A young child is sitting on a skateboard indoors, with an adult's hand reaching out to help them balance or move.",
           "mentioned_coco_objects": [
-            "person"
+            "person",
+            "skateboard"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -13457,7 +13576,8 @@
           "round": 1,
           "response": "A young child sits on a skateboard indoors, surrounded by furniture and other people.",
           "mentioned_coco_objects": [
-            "person"
+            "person",
+            "skateboard"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -13497,7 +13617,9 @@
         {
           "round": 1,
           "response": "A Boston Terrier wearing a blue harness rests its paws on the back of a seat in a vehicle.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "car"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 2
@@ -13901,7 +14023,8 @@
           "round": 1,
           "response": "A roof rack holds bicycles on top of a white vehicle, with a large advertisement promoting a cycling event displayed on a nearby van.",
           "mentioned_coco_objects": [
-            "bicycle"
+            "bicycle",
+            "car"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -13981,6 +14104,7 @@
           "round": 0,
           "response": "A person is holding a pink flip phone with a cartoon character on the screen, while another hand is interacting with it.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -13990,7 +14114,9 @@
         {
           "round": 1,
           "response": "A pink flip phone with a screen showing an image is being held by another hand, while someone in jeans sits nearby.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "cell phone"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 1
@@ -13999,6 +14125,7 @@
           "round": 2,
           "response": "A person is holding a pink flip phone with a screen displaying an image, while another hand reaches toward it.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -14274,7 +14401,6 @@
           "round": 1,
           "response": "Three individuals are in a kitchen, preparing to serve pizza onto plates.",
           "mentioned_coco_objects": [
-            "person",
             "pizza"
           ],
           "hallucinated_coco_objects": [],
@@ -14296,8 +14422,7 @@
           "round": 0,
           "response": "A group of people is preparing to ski at a ski resort, with a scenic mountain backdrop and a ski lift in the distance.",
           "mentioned_coco_objects": [
-            "person",
-            "skis"
+            "person"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -14370,10 +14495,13 @@
           "mentioned_coco_objects": [
             "bed",
             "book",
+            "dining table",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         },
         {
@@ -14382,10 +14510,13 @@
           "mentioned_coco_objects": [
             "bed",
             "book",
+            "dining table",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         },
         {
@@ -14394,10 +14525,13 @@
           "mentioned_coco_objects": [
             "bed",
             "book",
+            "dining table",
             "person"
           ],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "hallucinated_coco_objects": [
+            "dining table"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         }
       ],
@@ -14460,6 +14594,7 @@
           "round": 0,
           "response": "The image shows a stop sign with the word \"Caring\" added below the standard \"STOP\" text, set against a backdrop of autumn trees and parked vehicles.",
           "mentioned_coco_objects": [
+            "car",
             "stop sign"
           ],
           "hallucinated_coco_objects": [],
@@ -14470,6 +14605,7 @@
           "round": 1,
           "response": "A stop sign has been altered with a sticker that reads \"Caring,\" adding a humorous twist to the standard \"STOP\" message. Parked vehicles line the street below, with a fire truck visible in the distance.",
           "mentioned_coco_objects": [
+            "car",
             "stop sign",
             "truck"
           ],
@@ -14481,6 +14617,7 @@
           "round": 2,
           "response": "A stop sign on a street features a sticker that alters the standard \"STOP\" message to read \"CARING.\" Parked vehicles line the side of the road, with a fire truck visible in the background.",
           "mentioned_coco_objects": [
+            "car",
             "stop sign",
             "truck"
           ],
@@ -14503,6 +14640,7 @@
           "round": 0,
           "response": "The image shows a man sitting outdoors, holding a flip phone, with the Empire State Building visible in the background against a clear sky.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -14513,6 +14651,7 @@
           "round": 1,
           "response": "A man holds a flip phone while sitting outdoors under a clear sky, with buildings in the background.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -14523,6 +14662,7 @@
           "round": 2,
           "response": "A man wearing glasses holds a flip phone in one hand while standing outdoors under a clear sky.",
           "mentioned_coco_objects": [
+            "cell phone",
             "person"
           ],
           "hallucinated_coco_objects": [],
@@ -14590,6 +14730,7 @@
           "round": 0,
           "response": "The image shows a meal consisting of a hot dog topped with mustard and served alongside a side of potato chips, accompanied by a cocktail in a martini glass on a table.",
           "mentioned_coco_objects": [
+            "dining table",
             "dog",
             "hot dog"
           ],
@@ -14603,6 +14744,7 @@
           "round": 1,
           "response": "A meal featuring a hot dog and a cocktail is displayed on a table setting with a menu partially visible.",
           "mentioned_coco_objects": [
+            "dining table",
             "dog",
             "hot dog"
           ],
@@ -14918,39 +15060,32 @@
           "response": "A white and orange cat sits on the threshold of a glass door, looking out at a parked car outside.",
           "mentioned_coco_objects": [
             "car",
-            "cat",
-            "orange"
+            "cat"
           ],
-          "hallucinated_coco_objects": [
-            "orange"
-          ],
-          "has_hallucination": true,
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
           "num_flagged_by_clip": 1
         },
         {
           "round": 1,
           "response": "A white and orange cat sits on the threshold behind a glass door, gazing out into the street where a vehicle is parked.",
           "mentioned_coco_objects": [
-            "cat",
-            "orange"
+            "car",
+            "cat"
           ],
-          "hallucinated_coco_objects": [
-            "orange"
-          ],
-          "has_hallucination": true,
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
           "num_flagged_by_clip": 1
         },
         {
           "round": 2,
           "response": "A white and orange cat sits on a threshold inside a home, gazing out through a glass door with a vehicle visible in the reflection outside.",
           "mentioned_coco_objects": [
-            "cat",
-            "orange"
+            "car",
+            "cat"
           ],
-          "hallucinated_coco_objects": [
-            "orange"
-          ],
-          "has_hallucination": true,
+          "hallucinated_coco_objects": [],
+          "has_hallucination": false,
           "num_flagged_by_clip": 0
         }
       ],
@@ -15413,8 +15548,7 @@
           "mentioned_coco_objects": [
             "bicycle",
             "bus",
-            "person",
-            "stop sign"
+            "person"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -15425,8 +15559,7 @@
           "response": "A vibrant red bus with a striking flame design is parked next to a row of bicycles, with a stop sign visible in the background.",
           "mentioned_coco_objects": [
             "bicycle",
-            "bus",
-            "stop sign"
+            "bus"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -15437,8 +15570,7 @@
           "response": "A vibrant red bus is parked next to a row of bicycles, with a stop sign visible in the background.",
           "mentioned_coco_objects": [
             "bicycle",
-            "bus",
-            "stop sign"
+            "bus"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -15866,25 +15998,37 @@
         {
           "round": 0,
           "response": "The image shows a street sign reading \"BODACIOUS DR\" with a blurred background of trees and a vehicle on the road.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         },
         {
           "round": 1,
           "response": "A street sign reading \"BODACIOUS DR\" is mounted on a pole beside a road where a vehicle is visible in the background.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 2
         },
         {
           "round": 2,
           "response": "A street sign reads \"BODACIOUS DR\" as a vehicle drives by on the road.",
-          "mentioned_coco_objects": [],
-          "hallucinated_coco_objects": [],
-          "has_hallucination": false,
+          "mentioned_coco_objects": [
+            "car"
+          ],
+          "hallucinated_coco_objects": [
+            "car"
+          ],
+          "has_hallucination": true,
           "num_flagged_by_clip": 1
         }
       ],
@@ -15936,7 +16080,9 @@
         {
           "round": 0,
           "response": "The image shows a rainy street scene with a red traffic light, wet vehicles, and a hilly landscape covered in fog in the background.",
-          "mentioned_coco_objects": [],
+          "mentioned_coco_objects": [
+            "car"
+          ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
           "num_flagged_by_clip": 0
@@ -16070,6 +16216,7 @@
           "response": "The image shows a table with various dishes, including a plate of fries, a salad, and some meat, as well as glasses and a bottle of liquid, suggesting a meal shared by two people.",
           "mentioned_coco_objects": [
             "bottle",
+            "dining table",
             "person"
           ],
           "hallucinated_coco_objects": [
@@ -16082,7 +16229,7 @@
           "round": 1,
           "response": "Two individuals are seated at a table with various dishes, including a plate of salad and another with remnants of food, suggesting they have been eating a meal together.",
           "mentioned_coco_objects": [
-            "person"
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -16092,7 +16239,7 @@
           "round": 2,
           "response": "Two individuals are seated at a table filled with various dishes, including plates of salad and other food items, suggesting they are in the middle of a meal.",
           "mentioned_coco_objects": [
-            "person"
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,
@@ -16292,7 +16439,7 @@
           "round": 0,
           "response": "Two individuals are seated at an outdoor dining table, each engrossed in their mobile devices while enjoying a meal and drinks.",
           "mentioned_coco_objects": [
-            "person"
+            "dining table"
           ],
           "hallucinated_coco_objects": [],
           "has_hallucination": false,

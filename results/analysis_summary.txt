@@ -6,21 +6,21 @@ Wall-clock time:        2996s (49.9 min)
 
 Round        CHAIR_i   CHAIR_s   #mentions    #hallu   #captions
 ----------------------------------------------------------------
-round_0       0.0853    0.1200         750        64         500
-round_1       0.0822    0.1040         669        55         500
-round_2       0.0812    0.1000         665        54         500
+round_0       0.0694    0.0900         706        49         500
+round_1       0.0677    0.0800         635        43         500
+round_2       0.0660    0.0760         636        42         500
 
 ======================================================================
 RELATIVE REDUCTIONS (vs Round 0)
 ======================================================================
-Round 1:  CHAIR_i +3.6%   CHAIR_s +13.3%
-Round 2:  CHAIR_i +4.8%   CHAIR_s +16.7%
+Round 1:  CHAIR_i +2.4%   CHAIR_s +11.1%
+Round 2:  CHAIR_i +4.9%   CHAIR_s +15.6%
 
 ======================================================================
 DIMINISHING RETURNS (per-round delta)
 ======================================================================
-  Round 0->1:  ΔCHAIR_s = +1.60pp   ΔCHAIR_i = +0.31pp   hallucinations removed = 9
-  Round 1->2:  ΔCHAIR_s = +0.40pp   ΔCHAIR_i = +0.10pp   hallucinations removed = 1
+  Round 0->1:  ΔCHAIR_s = +1.00pp   ΔCHAIR_i = +0.17pp   hallucinations removed = 6
+  Round 1->2:  ΔCHAIR_s = +0.40pp   ΔCHAIR_i = +0.17pp   hallucinations removed = 1
 
 ======================================================================
 LATEX TABLE 1 — paste into your report
@@ -30,9 +30,9 @@ LATEX TABLE 1 — paste into your report
 \toprule
 Method & CHAIR$_i$ $\downarrow$ & CHAIR$_s$ $\downarrow$ \\
 \midrule
-Qwen2.5-VL-7B (raw) & 8.5\% & 12.0\% \\
-+ re-prompt $K{=}1$ & 8.2\% & 10.4\% \\
-+ re-prompt $K{=}2$ & 8.1\% & 10.0\% \\
+Qwen2.5-VL-7B (raw) & 6.9\% & 9.0\% \\
++ re-prompt $K{=}1$ & 6.8\% & 8.0\% \\
++ re-prompt $K{=}2$ & 6.6\% & 7.6\% \\
 \bottomrule
 \end{tabular}
 
@@ -41,7 +41,7 @@ CAPTION-LENGTH AND MENTION STATS PER ROUND
 ======================================================================
 Round       mean_words  median_words   mean_mentions
 ----------------------------------------------------
-round_0           23.4          23.0            1.50
-round_1           19.1          19.0            1.33
-round_2           20.1          20.0            1.42
+round_0           23.4          23.0            1.41
+round_1           19.1          19.0            1.26
+round_2           20.1          20.0            1.36
 
