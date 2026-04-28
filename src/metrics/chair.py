@@ -6,11 +6,25 @@ Reference:
 
 Two metrics:
   CHAIR_i:  hallucinated_objects / total_mentioned_objects
-            (fraction of mentions that are hallucinated)
   CHAIR_s:  hallucinated_captions / total_captions
-            (fraction of captions that contain at least one hallucination)
 
 Both are computed against MS COCO's 80 ground-truth object categories.
+
+Known limitations of this implementation (discussed in our paper):
+  1. Substring matching: when a caption contains a compound noun whose
+     constituent is a COCO category (e.g., "hot dog" -> "dog",
+     "teddy bear" -> "bear", "passenger cars" -> "car"), the lemma-
+     based matcher may produce false positive mentions.
+  2. Color/fruit collision: "orange" is both a color and a COCO fruit
+     category. Captions like "an orange cat" can produce false
+     mentions of the fruit.
+  3. COCO annotation gaps: some images in MS COCO val 2014 have
+     unlabeled but visible objects (e.g., a laptop in the corner
+     that COCO annotators didn't label). When a VLM correctly names
+     such an object, CHAIR will flag it as a hallucination.
+
+We do NOT try to fix these in the matcher itself — instead, we
+quantify their impact via a manual audit reported in the paper.
 """
 
 from __future__ import annotations
@@ -21,34 +35,28 @@ from typing import Iterable, List, Set
 import spacy
 
 
-# Synonym map: phrases the model might say -> canonical COCO category name.
-# We are intentionally CONSERVATIVE here. We only map terms that are
-# linguistically equivalent to a COCO category. We do NOT map generic
-# hypernyms (e.g., "vehicle" -> "car", "table" -> "dining table") because
-# such mappings inflate hallucination counts when the VLM uses a more
-# general term that doesn't refer to the specific COCO category.
+# Synonym map: phrases the model might say -> canonical COCO category.
+# Conservative: only direct linguistic equivalents and plurals.
 SYNONYMS = {
-    # ---- people (gendered/age variants of "person") ----
+    # ---- people ----
     "man": "person", "woman": "person", "boy": "person", "girl": "person",
     "child": "person", "kid": "person", "guy": "person", "lady": "person",
     "people": "person", "men": "person", "women": "person", "children": "person",
     "individual": "person", "individuals": "person",
-    "person": "person",
+    "person": "person", "persons": "person",
     # ---- vehicles ----
-    "bike": "bicycle", "bicycle": "bicycle",
-    "motorbike": "motorcycle", "motorcycle": "motorcycle",
-    "plane": "airplane", "jet": "airplane", "airplane": "airplane",
-    # NOTE: do NOT map "vehicle" or "automobile" -- they are hypernyms.
-    # NOTE: do NOT map "taxi" -> "car" -- buses can be taxis colloquially.
+    "bike": "bicycle", "bicycle": "bicycle", "bicycles": "bicycle",
+    "motorbike": "motorcycle", "motorcycle": "motorcycle", "motorcycles": "motorcycle",
+    "plane": "airplane", "jet": "airplane", "airplane": "airplane", "airplanes": "airplane",
     "car": "car", "cars": "car",
     "bus": "bus", "buses": "bus",
     "truck": "truck", "trucks": "truck",
     "boat": "boat", "boats": "boat",
     "train": "train", "trains": "train",
-    # ---- animals (plurals + simple variants) ----
-    "puppy": "dog", "dogs": "dog", "dog": "dog",
-    "kitten": "cat", "cats": "cat", "cat": "cat",
-    "calf": "cow", "cows": "cow", "cow": "cow",
+    # ---- animals ----
+    "puppy": "dog", "puppies": "dog", "dogs": "dog", "dog": "dog",
+    "kitten": "cat", "kittens": "cat", "cats": "cat", "cat": "cat",
+    "calf": "cow", "calves": "cow", "cows": "cow", "cow": "cow", "bull": "cow",
     "horses": "horse", "horse": "horse",
     "birds": "bird", "bird": "bird",
     "elephants": "elephant", "elephant": "elephant",
@@ -56,22 +64,21 @@ SYNONYMS = {
     "giraffes": "giraffe", "giraffe": "giraffe",
     "zebras": "zebra", "zebra": "zebra",
     "sheep": "sheep",
-    # ---- electronics (only direct equivalents) ----
+    # ---- electronics ----
     "tv": "tv", "television": "tv", "televisions": "tv",
     "cellphone": "cell phone", "cell phone": "cell phone",
     "cellphones": "cell phone", "cell phones": "cell phone",
-    # NOTE: do NOT map generic "phone" -- it could be a landline (not in COCO).
     "remote control": "remote", "remote": "remote",
     "laptops": "laptop", "laptop": "laptop",
-    # ---- furniture (only direct equivalents) ----
+    "keyboards": "keyboard", "keyboard": "keyboard",
+    # ---- furniture ----
     "couch": "couch", "couches": "couch", "sofa": "couch", "sofas": "couch",
     "dining table": "dining table",
     "chairs": "chair", "chair": "chair",
-    # NOTE: do NOT map "table" generically -- the GT has "dining table" only.
     "beds": "bed", "bed": "bed",
-    # ---- food (only direct equivalents and plurals) ----
+    # ---- food ----
     "donut": "donut", "doughnut": "donut", "donuts": "donut", "doughnuts": "donut",
-    "hot dog": "hot dog", "hotdog": "hot dog", "hotdogs": "hot dog",
+    "hot dog": "hot dog", "hotdog": "hot dog", "hotdogs": "hot dog", "hot dogs": "hot dog",
     "pizzas": "pizza", "pizza": "pizza",
     "cakes": "cake", "cake": "cake",
     "sandwiches": "sandwich", "sandwich": "sandwich",
@@ -122,15 +129,12 @@ SYNONYMS = {
     "hair driers": "hair drier", "hair drier": "hair drier", "hairdryer": "hair drier",
     "toothbrushes": "toothbrush", "toothbrush": "toothbrush",
     "clocks": "clock", "clock": "clock",
-    "keyboards": "keyboard", "keyboard": "keyboard",
-    "mouses": "mouse", "mouse": "mouse",  # rare but COCO has "mouse" (the device)
     "potted plants": "potted plant", "potted plant": "potted plant", "houseplant": "potted plant",
 }
 
 
 @dataclass
 class CHAIRResult:
-    """Per-caption CHAIR result + counts for aggregate computation."""
     mentioned_objects: Set[str]
     hallucinated_objects: Set[str]
     grounded_objects: Set[str]
